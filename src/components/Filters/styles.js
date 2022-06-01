@@ -19,7 +19,7 @@ const styles = {
         padding: 0 24px;
         margin-left: 24px;
         border-radius: 100px;
-        background: ${({ active }) => (active ? colors.darkGreen : colors.mediumGrey)}
+        background: ${({ active }) => (active ? colors.darkGreen : colors.mediumGrey)};
         cursor: pointer;
     `
 };

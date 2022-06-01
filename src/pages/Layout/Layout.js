@@ -7,7 +7,6 @@ import header from 'assets/header.png';
 const Layout = () => (
     <>
         <Header />
-        {/* ver esto que está hardcodeado */}
         <Banner image={header} text="Electronics" />
         <Catalog />
     </>

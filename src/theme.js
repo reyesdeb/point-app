@@ -27,10 +27,6 @@ const theme = {
         centerPage: css`
             margin: 0 auto;
             max-width: 1440px;
-        `,
-        centerContainer: css`
-            margin: 0 auto;
-            max-width: 1176px;
         `
     }
 };

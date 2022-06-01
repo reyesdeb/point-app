@@ -1,15 +1,18 @@
 import styled from 'styled-components';
-import { mixins, colors } from 'theme';
+import { colors } from 'theme';
 
 const styles = {
-    CenterContainer: styled.div`
-        ${mixins.centerContainer}
-    `,
-    StyckyWrapper: styled.div`
+    StickyWrapper: styled.div`
+        display: flex;
+        justify-content: center;
         position: sticky;
         top: 80px;
         z-index: 2;
         background: ${colors.lightGrey};
+    `,
+    MainContainer: styled.main`
+        margin: 0 auto;
+        max-width: 1176px;
     `,
     ProductsGrid: styled.div`
         display: grid;

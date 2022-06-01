@@ -3,6 +3,8 @@ import { colors, font } from 'theme';
 
 const styles = {
     Container: styled.div`
+        width: 100%;
+        max-width: 1176px;
         display: flex;
         justify-content: space-between;
         padding: 60px 0 24px;
