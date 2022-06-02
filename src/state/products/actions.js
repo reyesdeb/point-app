@@ -1,35 +1,71 @@
 import { axiosInstance } from 'api';
 import * as types from './types';
 
-const fetchDataSuccess = (products) => ({
-    type: types.FETCH_DATA_SUCCESS,
+const fetchProductsDataSuccess = (products) => ({
+    type: types.FETCH_PRODUCTS_DATA_SUCCESS,
     products
 });
 
-export const fetchProducts = () => async (dispatch) => {
+const setFilteredProducts = (filteredProducts) => ({
+    type: types.SET_FILTERED_PRODUCTS,
+    filteredProducts
+});
+
+export const fetchProductsData = (activeSorting, page) => async (dispatch) => {
     try {
         const response = await axiosInstance.get('/products');
 
-        dispatch(fetchDataSuccess(response.data));
+        dispatch(fetchProductsDataSuccess(response.data));
+
+        localStorage.setItem('products', JSON.stringify(response.data));
+
+        dispatch(changePage(page, 16, activeSorting));
     } catch (error) {
         console.log(error);
     }
 };
 
-export const sortBy = (sort) => (dispatch, getState) => {
+const sortByDefault = () => JSON.parse(localStorage.getItem('products'));
+
+const sortByCostDescendant = (products) => products.sort((a, b) => a.cost - b.cost);
+
+const sortByCostAscendant = (products) => products.sort((a, b) => b.cost - a.cost);
+
+const sortBy = (name) => (dispatch, getState) => {
     const { products: productsState } = getState();
     const { products } = productsState;
 
-    const sortedProducts = sort(products);
+    const sortFn = {
+        'Most-recent': sortByDefault,
+        'Lowest-Price': sortByCostDescendant,
+        'Highest-Price': sortByCostAscendant
+    };
 
-    dispatch(fetchDataSuccess(sortedProducts));
+    try {
+        const sortedProducts = sortFn[name](products);
+
+        dispatch(fetchProductsDataSuccess(sortedProducts));
+        return sortedProducts;
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-// ?
-export const sortByDefault = () => (dispatch) => dispatch(sortBy((products) => products));
+export const changePage =
+    (actualPage, itemsPerPage = 16, activeSorting) =>
+    (dispatch, getState) => {
+        const { products: productsState } = getState();
+        const { products } = productsState;
 
-export const sortByCostDescendant = () => (dispatch) =>
-    dispatch(sortBy((products) => products.sort((a, b) => a.cost - b.cost)));
+        try {
+            const orderedProducts = activeSorting ? dispatch(sortBy(activeSorting)) : products;
+            const page = !actualPage || isNaN(actualPage) ? 1 : actualPage;
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const filteredProducts = orderedProducts.slice(start, end);
 
-export const sortByCostAscendant = () => (dispatch) =>
-    dispatch(sortBy((products) => products.sort((a, b) => b.cost - a.cost)));
+            dispatch(setFilteredProducts(filteredProducts));
+        } catch (error) {
+            console.log(error);
+        }
+    };

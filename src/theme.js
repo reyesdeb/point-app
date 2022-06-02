@@ -8,7 +8,7 @@ const theme = {
         mediumGrey: '#ededed',
         darkGrey: '#616161',
         commonGrey: '#d9d9d9',
-        green: '#6fe7fc',
+        green: '#22dafb',
         darkGreen: '#0ad4fa'
     },
     font: {

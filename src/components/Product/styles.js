@@ -47,7 +47,6 @@ const styles = {
         align-items: center;
         color: ${colors.white};
         font-size: ${font.large};
-        font-size: 36px;
         letter-spacing: -0.08px;
         &:after {
             content: '';

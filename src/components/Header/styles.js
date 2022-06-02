@@ -20,6 +20,14 @@ const styles = {
     PointsManager: styled.div`
         display: flex;
     `,
+    AddPoints: styled.button`
+        height: 48px;
+        padding: 0 16px;
+        background: ${colors.mediumGrey};
+        border-radius: 100px;
+        margin-right: 18px;
+        cursor: pointer;
+    `,
     Points: styled.button`
         height: 48px;
         padding: 0 16px;

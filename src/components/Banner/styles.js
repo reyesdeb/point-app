@@ -5,18 +5,21 @@ const styles = {
     Background: styled.div`
         background: ${colors.green};
         height: 430px;
+        position: relative;
     `,
     CenterContainer: styled.div`
         ${mixins.centerPage}
-        position: relative
     `,
     Text: styled.h1`
+        width: 100%;
+        max-width: 1176px;
+        color: ${colors.white};
         font-size: ${font.xxlarge};
         font-weight: ${fontWeight.bold};
-        color: ${colors.white};
         position: absolute;
         bottom: 48px;
-        left: 132px;
+        right: 50%;
+        transform: translate(50%);
     `
 };
 

@@ -1,8 +1,8 @@
 import { axiosInstance } from 'api';
 import * as types from './types';
 
-const fetchDataSuccess = (userData) => ({
-    type: types.FETCH_DATA_SUCCESS,
+const fetchUserDataSuccess = (userData) => ({
+    type: types.FETCH_USER_DATA_SUCCESS,
     userData
 });
 
@@ -15,7 +15,7 @@ export const fetchUserData = () => async (dispatch) => {
     try {
         const response = await axiosInstance.get('/user/me');
 
-        dispatch(fetchDataSuccess(response.data));
+        dispatch(fetchUserDataSuccess(response.data));
     } catch (error) {
         console.log(error);
     }
@@ -34,6 +34,7 @@ export const fetchPoints = (amount) => async (dispatch) => {
 export const redeem = (productId) => async (dispatch) => {
     try {
         await axiosInstance.post('/redeem', { productId });
+
         dispatch(fetchUserData());
     } catch (error) {
         console.log(error);
